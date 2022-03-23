@@ -1,0 +1,12 @@
+﻿@model CreateContestViewModel
+
+<div style="padding: 12rem 12rem 12rem 12rem">
+    <h1>Choose the cover for your contest</h1>
+    <hr>
+    @foreach (var item in ViewBag.Covers)
+    {
+        <a asp-controller="Contest" asp-action="Create" asp-route-url="@item">
+            <img src="@item" style="border: 2px solid black; max-height: 700px; max-width: 700px">
+        </a>
+    }
+</div>

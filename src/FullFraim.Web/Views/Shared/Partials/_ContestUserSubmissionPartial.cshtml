@@ -1,0 +1,12 @@
+﻿@model UserSubmissionViewModel
+
+<link href="~/css/hover-monochrome.css" rel="stylesheet" />
+
+<div class="card" style="margin-inline:1rem">
+    <div class="hovereffect">
+        <img class="img-responsive" src="@Model.PhotoUrl" alt="Card image cap" style="width: 300px; height:200px">
+        <div class="overlay">
+            <h2>@Model.SubmitterName</h2>
+        </div>
+    </div>
+</div>

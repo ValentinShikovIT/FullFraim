@@ -1,0 +1,39 @@
+﻿@model ContestSubmissionViewModel
+
+<link href="~/css/hover-monochrome.css" rel="stylesheet" />
+
+@if (Model.IsCurrentUserSubmission)
+{
+    <div class="card" style="margin-inline:1rem; margin-bottom:1rem; opacity:0.3">
+        <div class="hovereffect">
+            <img class="img-responsive" src="@Model.Image_Url" alt="Card image cap" style="width: 300px; height:250px">
+            <div class="overlay">
+                <h2>@Model.AuthorName</h2>
+                <a class="info" asp-action="GiveReview" asp-controller="Dashboard">See submission</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card" style="margin-inline:1rem; margin-bottom:1rem;">
+        <div class="hovereffect">
+            <img class="img-responsive" src="@Model.Image_Url" alt="Card image cap" style="width: 300px; height:250px">
+            <div class="overlay">
+                <h2>@Model.AuthorName</h2>
+                @if (Model.ActivePhase.Name == "PhaseII")
+                {
+                    <a asp-action="GiveReview" asp-controller="Dashboard" asp-route-contestId="@Model.ContestId"
+                       asp-route-submitterId="@Model.AuthorId" class="info">Review</a>
+                }
+                else if (Model.ActivePhase.Name == "Finished")
+                {
+                    <a asp-action="DetailsReview" asp-controller="Dashboard" asp-route-contestId="@Model.ContestId"
+                       asp-route-photoId="@Model.PhotoId" class="info">Details</a>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+

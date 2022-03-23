@@ -1,0 +1,28 @@
+﻿@using FullFraim.Models.ViewModels.ContactUs
+@model ContactUsInputModel
+
+<div class="contact-form-area">
+    <div class="container-fluid">
+        <form asp-action="ContactUs" asp-controller="Home" method="post">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <input asp-for="Name" type="text" class="form-control" name="name" id="name" placeholder="Your Name">
+                </div>
+                <div class="col-12 col-md-4">
+                    <input asp-for="Email" type="email" class="form-control" name="email" id="email" placeholder="Your Email">
+                </div>
+                <div class="col-12 col-md-4">
+                    <input asp-for="Subject" type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+                </div>
+                <div class="col-12">
+                    <textarea asp-for="Message" name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn studio-btn mt-3">
+                        <img src="~/img/core-img/logo-icon.png" alt=""> Send
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

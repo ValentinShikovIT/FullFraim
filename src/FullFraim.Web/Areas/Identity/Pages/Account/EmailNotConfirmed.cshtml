@@ -1,0 +1,20 @@
+﻿@page
+@model EmailNotConfimed
+@{
+    ViewData["Title"] = "Email not confirmed";
+}
+
+<link rel="stylesheet" href="~/css/Identity/Login.css" />
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <hr />
+            <p class="text-danger">@ViewData["Title"]</p>
+            <p> Please check your email to confirm your account.</p>
+        </div>
+        <div class="form-group">
+            <p class="text-info">If you haven't received an email for confirmation <a asp-area="Identity" asp-page="/Account/ResetEmailConfirmation">click here</a></p>
+        </div>
+    </div>
+</div>

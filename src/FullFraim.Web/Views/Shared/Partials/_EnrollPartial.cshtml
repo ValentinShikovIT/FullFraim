@@ -1,0 +1,76 @@
+﻿@model EnrollViewModel
+
+<div class="contact-form-area">
+    <div class="container-fluid">
+        <form asp-action="Enroll" asp-controller="Dashboard" method="post" enctype="multipart/form-data" onsubmit="return EditAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="ContestId" value="@Model.ContestId" hidden />
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <input asp-for="ImageTitle" type="text" class="form-control" placeholder="@Html.NameFor(x => x.ImageTitle)">
+                    <span asp-validation-for="ImageTitle" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-4">
+                    <input asp-for="Photo" class="form-control" id="imgInp" placeholder="Subject">
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                <img id="blah" src="https://res.cloudinary.com/fullfraim/image/upload/v1622574796/ndetnuuzutpjpruvknjm.png" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <textarea asp-for="ImageDescription" class="form-control" placeholder="@Html.NameFor(x => x.ImageDescription)">
+                    </textarea>
+                    <span asp-validation-for="ImageDescription" class="text-danger"></span>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn studio-btn mt-3">
+                        <img src="~/img/core-img/logo-icon.png" alt=""> Enroll
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script asp-append-version="true">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        readURL(this);
+    });
+
+    $(document).ready(function () {
+        EditAjaxPost = form => {
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.isValid) {
+                        location.reload();
+                    }
+                    else {
+                        $(".modal-body").html('');
+                        $(".modal-body").html(res);
+                    }
+                },
+                error: function (err) {
+                    location.reload();
+                    alert("An error occured.");
+                }
+            })
+            //to prevent default form submit event
+            return false;
+        };
+    });
+</script>

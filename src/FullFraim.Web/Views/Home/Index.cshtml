@@ -1,0 +1,38 @@
+﻿@model List<HomeIndexViewModel>
+
+<div class="social-sidebar-area bg-white" style="height: 10%">
+    <div class="message-box">
+        <a id="contact" onclick="showInPopup('@Url.Action("ContactUs","Home", null, Context.Request.Scheme)','Please get in touch')"
+           data-toggle="modal" data-target=".contact-modal-lg"><img src="/img/core-img/envelope.png" alt=""></a>
+    </div>
+</div>
+<section class="welcome-area">
+    <div class="carousel h-100 slide" data-ride="carousel" id="welcomeSlider">
+        <div class="carousel-inner h-100">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="carousel-item h-100 bg-img" id="should-be-active" style="background-image: url(@Model[i].PhotoUrl);">
+                    <div class="carousel-content h-100">
+                        <div class="slide-text">
+                            <span>@(i + 1). </span>
+                            <h2><span style="font-size: 2.5vh;">@Model[i].Title</span> <sub>by</sub> @Model[i].SubmitterName</h2>
+                        </div>
+                    </div>
+                </div>      }
+        </div>
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <li data-target="#welcomeSlider" data-slide-to="@i" class="bg-img" id="should-be-active1" style=" background-image: url(@Model[i].PhotoUrl);"></li>
+            }
+        </ol>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $('#should-be-active').addClass('active');
+        $('#should-be-active1').addClass('active');
+    </script>
+    <script src="~/js/ModalOpen.js" asp-append-version="true"></script>
+}

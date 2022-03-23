@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <link rel="stylesheet" href="~/css/core-style.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true">
+
+    <title>@ViewData["Title"] - FullFraim.Web</title>
+</head>
+<body>
+    <partial name="~/Views/Shared/Partials/_PreloaderPartial.cshtml" />
+    <partial name="~/Views/Shared/Partials/_HeaderPartial.cshtml" />
+
+    @if (@Url.ActionContext.HttpContext.Request.Path.Value.Contains("Identity"))
+    {
+        <div style="margin: 15vh 0rem 0rem 0rem">
+            @RenderBody()
+        </div>
+    }
+    else
+    {
+        @RenderBody();
+    }
+
+    <div class="contact-popup-form" id="contact-modal-lg">
+        <div class="modal fade contact-modal-lg" tabindex="-1" role="dialog" aria-labelledby="contact-modal-lg" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="contact-heading-text text-center mb-30">
+                                    <span></span>
+                                    <h2 class="modal-title"></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+            asp-fallback-src="~/lib/jquery/jquery.min.js"
+            asp-append-version="true"></script>
+
+    <script src="~/js/popper.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins.js" asp-append-version="true"></script>
+    <script src="~/js/active.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

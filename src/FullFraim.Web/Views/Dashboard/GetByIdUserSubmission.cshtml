@@ -1,0 +1,13 @@
+﻿@model UserSubmissionViewModel
+
+<div class="gallery_area clearfix">
+    <h5 style="text-align:center; color:gray;">@Model.ContestName</h5>
+    <h5 style="text-align:center; color: cornflowerblue;">@Model.ContestCatrogry</h5>
+    <div class="container-fluid clearfix">
+        <div class="row portfolio-column">
+
+            <partial name="~/Views/Shared/Partials/_ContestUserSubmissionPartial.cshtml" model="Model" />
+
+        </div>
+    </div>
+</div>

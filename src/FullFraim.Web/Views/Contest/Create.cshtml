@@ -1,0 +1,172 @@
+﻿@model CreateContestViewModel
+
+@{
+    var categories = new SelectList(ViewBag.Categories, "Id", "Name");
+    var types = new SelectList(ViewBag.ContestTypes, "Id", "Name");
+    var jury = new SelectList(ViewBag.Jury, "UserId", "FullName");
+    var participants = new SelectList(ViewBag.Participants, "UserId", "FullName");
+}
+
+<link rel="stylesheet" href="~/css/Identity/Login.css" />
+
+<div style="margin: 15vh 0rem 0rem 0rem">
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent" style="max-width: 60rem !important">
+            <form id="account" method="post" enctype="multipart/form-data">
+                <div class="fadeIn first" style="margin-top: 1rem;">
+                    <h5 style="display: inline-block">Create Contest</h5>
+                </div>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control fadeIn second" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                @if (ViewBag.Cover != null)
+                {
+                    <p>Cover is Choosen</p>
+                    <div class="form-group" hidden>
+                        <label asp-for="Cover_Url"></label>
+                        <input asp-for="Cover_Url" value="@ViewBag.Cover" class="form-control fadeIn second">
+                        <span asp-validation-for="@Model.Cover_Url" class="text-danger"></span>
+                    </div> }
+                else
+                {
+                    <div class="dropdown" id="ImageDrop" style="z-index: 99">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Image Upload Options
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a style="padding: 1rem" href="" id="ImageUpload">Upload</a></li>
+                            <li><a style="padding: 1rem" href="" id="ImageWithUrl">With Url</a></li>
+                            <li><a style="padding: 1rem" asp-controller="Contest" asp-action="ChooseCovers">With Existing Cover</a></li>
+                        </ul>
+                    </div>
+                    <div class="form-group" id="ImageUpload_" hidden>
+                        <label asp-for="Cover"></label>
+                        <input asp-for="Cover" id="cover-input" class="form-control">
+                        <span asp-validation-for="@Model.Cover" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" id="ImageWithUrl_" hidden>
+                        <label asp-for="Cover_Url"></label>
+                        <input asp-for="Cover_Url" id="url-input" class="form-control">
+                        <span asp-validation-for="@Model.Cover_Url" class="text-danger"></span>
+                    </div>
+                }
+                <div class="form-group fadeIn second">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="form-control fadeIn third" placeholder="Description">
+                    </textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group fadeIn second">
+                    <label asp-for="ContestCategoryId"></label>
+                    <select asp-for="ContestCategoryId" asp-items="categories" class="form-control">
+                    </select>
+                    <span asp-validation-for="@Model.ContestCategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group fadeIn second">
+                    <label for="seeAnotherField" asp-for="ContestTypeId"></label>
+                    <select asp-for="ContestTypeId" asp-items="types" class="form-control" id="seeAnotherField">
+                    </select>
+                </div>
+                <div class="form-group fadeIn second" id="invitation-jury">
+                    <label asp-for="Juries"></label>
+                    <select asp-for="Juries" asp-items="jury" class="form-control" multiple>
+                    </select>
+                    <span asp-validation-for="@Model.Juries" class="text-danger"></span>
+                </div>
+                <div class="form-group fadeIn second" id="invitation-participant">
+                    <div id="otherFieldDiv">
+                        <label for="otherField" asp-for="Participants"></label>
+                            <select asp-for="Participants" asp-items="participants" class="form-control" multiple>
+                            </select>
+                            <span asp-validation-for="@Model.Participants" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group fadeIn second">
+                    <label asp-for="Phases.EndDate_PhaseI"></label>
+                    <input asp-for="Phases.EndDate_PhaseI" class="form-control">
+                    <span asp-validation-for="@Model.Phases.EndDate_PhaseI" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <h5>Phase Two Duration</h5>
+                    <p>Drag the slider to display the current value.</p>
+                    <div class="slidecontainer">
+                        <input asp-for="Phases.PhaseII_Duration" type="range" min="1" max="24" value="1" class="slider" style="width: 100%" id="myRange">
+                        <p>Hours: <span id="demo"></span></p>
+                    </div>
+                </div>
+                <div class="form-group formFooter">
+                    <div class="form-group">
+                        <button type="submit" asp-action="Create" formmethod="post" class="btn btn-primary fadeIn fourth" id="submitId">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $("#seeAnotherField").change(function () {
+            if ($("#seeAnotherField option:selected").text() == "@Constants.ContestType.Invitational") {
+                $('#otherFieldDiv').show();
+                $('#otherField').attr('required', '');
+                $('#otherField').attr('data-error', 'This field is required.');
+            } else {
+                $('#otherFieldDiv').hide();
+                $('#otherField').removeAttr('required');
+                $('#otherField').removeAttr('data-error');
+            }
+        });
+        $("#seeAnotherField").trigger("change");
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#ImageUpload").on("click", function (event) {
+                event.preventDefault();
+                $("#ImageWithUrl_").attr("hidden", "")
+                $("#ImageUpload_").removeAttr("hidden")
+                $("#url-input").val("")
+            })
+        });
+        $(document).ready(function () {
+            $("#ImageWithUrl").on("click", function (event) {
+                event.preventDefault();
+                $("#ImageUpload_").attr("hidden", "")
+                $("#ImageWithUrl_").removeAttr("hidden")
+                $("#cover-input").val("")
+            })
+        });
+        $(document).ready(function () {
+            $("#ImageWithUrl").on("click", function (event) {
+                event.preventDefault();
+                $("#ImageUpload_").attr("hidden", "")
+                $("#ImageWithUrl_").removeAttr("hidden")
+                $("#cover-input").val("")
+            })
+        });
+        console.log('dasdwqd')
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#multi-select-demo').multiselect();
+
+        });
+    </script>
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function () {
+            output.innerHTML = this.value;
+        }</script>
+}

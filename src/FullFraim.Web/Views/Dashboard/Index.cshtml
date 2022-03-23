@@ -1,0 +1,145 @@
+@model DashboardPhasesPaginatedViewModel
+
+<style>
+    .paging {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="top-users" style="height: 87%">
+    @await Component.InvokeAsync("PointsTillNext")
+</div>
+<div class="gallery_area clearfix" style="border-left: solid 1px lightgray">
+    <div class="container-fluid clearfix">
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success">
+                <strong>Success!</strong> @TempData["success"]
+            </div>
+        }
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" asp-controller="Dashboard" asp-action="Index"
+                       asp-route-categoryId="0">All</a>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <a class="dropdown-item" test="categoryId" asp-controller="Dashboard" asp-action="Index"
+                           asp-route-categoryId="@category.Id">@category.Name</a>
+                    }
+                </li>
+            </ul>
+        </div>
+        <div style="margin-bottom: 1rem;margin-top: 1rem;">Open</div>
+        <div tabindex="1" id="focus-element" hidden>
+        </div>
+        <div>
+            <div class="row portfolio-column" id="ajax-pagination-phaseOne">
+                <partial name="~/Views/Shared/Partials/_ContestCardPartial.cshtml" model="Model.PhaseOne" />
+
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem;margin-top: 4rem;">Reviewing</div>
+        <div class="row portfolio-column">
+            <div class="row portfolio-column" id="ajax-pagination-phaseTwo">
+                <partial name="~/Views/Shared/Partials/_ContestCardPartial.cshtml" model="Model.PhaseTwo" />
+
+            </div>
+        </div>
+        <div style="margin-bottom:1rem;margin-top: 4rem;">Closed</div>
+        <div class="row portfolio-column">
+            <div class="row portfolio-column" id="ajax-pagination-finished">
+                <partial name="~/Views/Shared/Partials/_ContestCardPartial.cshtml" model="Model.Finished" />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        function paginationPhase(event, url) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var categoryQuery = '';
+
+            var queries = location.href.split('?')[1]
+            if (queries != undefined) {
+                queries = queries.split('&');
+
+                for (var i = 0; i < queries.length; i++) {
+                    var query = queries[i].split('=');
+                    if (query[0] == 'categoryId') {
+                        categoryQuery = '&' + query[0] + '=' + query[1];
+                        break;
+                    }
+                }
+            }
+
+            if (event.currentTarget.classList.contains('PhaseI')) {
+                var phaseOneUrl = url + '&phase=PhaseI'
+                $.ajax({
+                    url: phaseOneUrl + categoryQuery,
+                    success: function (res) {
+                        $('#ajax-pagination-phaseOne').html('');
+                        $('#ajax-pagination-phaseOne').html(res);
+                    }
+                });
+
+                $('#ajax-pagination-phaseOne').focus();
+
+            }
+            if (event.currentTarget.classList.contains('PhaseII')) {
+
+                $.ajax({
+                    url: url + '&phase=PhaseII' + categoryQuery,
+                    success: function (res) {
+                        $('#ajax-pagination-phaseTwo').html('');
+                        $('#ajax-pagination-phaseTwo').html(res);
+                    }
+                });
+
+                $('#ajax-pagination-phaseTwo').focus();
+            }
+            if (event.currentTarget.classList.contains('finished')) {
+
+                $.ajax({
+                    url: url + '&phase=finished' + categoryQuery,
+                    success: function (res) {
+                        $('#ajax-pagination-finished').html('');
+                        $('#ajax-pagination-finished').html(res);
+                    }
+                });
+
+                $('#ajax-pagination-finished').focus();
+            }
+            return false;
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            OpenModal = (url, title, id) => {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: { contestId: id },
+                    success: function (response) {
+                        $(".modal-title").html(title);
+                        $(".modal-body").html(response);
+                    }
+                });
+            }
+        });
+    </script>
+}

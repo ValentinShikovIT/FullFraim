@@ -1,0 +1,120 @@
+﻿@model GiveReviewViewModel
+
+<link rel="stylesheet" href="~/css/Identity/Login.css" />
+<link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+@if (Model.HasJuryGivenReview)
+{
+    <div style="margin: 15vh 0rem 0rem 0rem">
+        <div class="wrapper fadeInDown">
+            <div id="formContent" style="max-width: 60rem !important">
+                <div style="margin-top:3rem;">
+                    <p>@Model.Author</p>
+                    <img class="card-img-top" src="@Model.PhotoUrl" alt="Card image cap" style="width: 75%; height:50%" />
+                    <p>@Model.Description</p>
+                </div>
+                    <input asp-for="Review.PhotoId" hidden />
+                    <input asp-for="Review.JuryId" hidden />
+                    <div class="fadeIn first" style="margin-top: 1rem;">
+                        <h5 style="display: inline-block">Give Review</h5>
+                    </div>
+                    <hr />
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Review.Comment"></label>
+                        <textarea asp-for="Review.Comment" class="form-control fadeIn second" readonly ></textarea>
+                        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>Score</h5>
+                        <p>Drag the slider to display the current value.</p>
+                        <div class="slidecontainer">
+                            <input asp-for="Review.Score" type="range" min="0" max="10" value="@Model.Review.Score" class="slider" style="width: 100%" id="myRange" disabled>
+                            <p>Score: <span id="demo"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input asp-for="Review.Checkbox" class="custom-control-input" disabled id="customSwitch2">
+                        <label class="custom-control-label" for="customSwitch2">Photo does not fit contest category</label>
+                    </div>
+
+                    <div class="form-group formFooter">
+                        <div class="form-group">
+                            <button formmethod="post" class="btn btn-secondary fadeIn fourth" disabled>Already submited</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div style="margin: 15vh 0rem 0rem 0rem">
+        <div class="wrapper fadeInDown">
+            <div id="formContent" style="max-width: 60rem !important">
+                <div style="margin-top:3rem;">
+                    <p>@Model.Author</p>
+                    <img class="card-img-top" src="@Model.PhotoUrl" alt="Card image cap" style="width: 75%; height:50%" />
+                    <p>@Model.Description</p>
+                </div>
+                <form id="account" asp-controller="Dashboard" asp-action="GiveReview" method="post">
+                    <input asp-for="Review.PhotoId" hidden />
+                    <input asp-for="Review.JuryId" hidden />
+                    <input asp-for="PhotoId" hidden />
+                    <input asp-for="Review.PhotoId" hidden />
+                    <input asp-for="PhotoUrl" hidden />
+                    <div class="fadeIn first" style="margin-top: 1rem;">
+                        <h5 style="display: inline-block">Give Review</h5>
+                    </div>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Review.Comment"></label>
+                        <textarea asp-for="Review.Comment" class="form-control fadeIn second" placeholder="Comment.." ></textarea>
+                        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>Score</h5>
+                        <p>Drag the slider to display the current value.</p>
+                        <div class="slidecontainer">
+                            <input asp-for="Review.Score" type="range" min="1" max="10" value="1" class="slider" style="width: 100%" id="myRange">
+                            <p>Score: <span id="demo"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="custom-control custom-switch">
+                        <input asp-for="Review.Checkbox" class="custom-control-input" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">Photo does not fit contest category</label>
+                    </div>
+
+                    <div class="form-group formFooter">
+                        <div class="form-group">
+                            <p>Please note: You can give one review for this photo, once you submit it you won't be able to make changes</p>
+                            <button type="submit"  formmethod="post" class="btn btn-primary fadeIn fourth">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+@section Scripts{
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+
+
+        slider.oninput = function () {
+            output.innerHTML = this.value;
+        }</script>
+}

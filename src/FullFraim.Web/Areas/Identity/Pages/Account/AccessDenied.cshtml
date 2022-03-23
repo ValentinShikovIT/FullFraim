@@ -1,0 +1,17 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+<link rel="stylesheet" href="~/css/Identity/Login.css" />
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <hr />
+            <h5 class="text-danger">@ViewData["Title"]</h5>
+            <p> You do not have access to this resource.</p>
+        </div>
+    </div>
+</div>
