@@ -3,6 +3,8 @@
 ## _Cool Right!_
 ![N|Solid](https://res.cloudinary.com/fullfraim/image/upload/v1623086529/For%20Documentation/logo_gptfjh.png)
 
+[![Build status](https://dev.azure.com/vshikovit/vshikovit/_apis/build/status/vshikovit-Azure%20Web%20App%20for%20ASP.NET-CI)](https://dev.azure.com/vshikovit/vshikovit/_build/latest?definitionId=1)
+
 ## Description
 > FullFraim is a project written in ASP.NET. It Includes a public API and a MVC.
 > The site features photo-contests in which a newly registered user can participate, starting from the beginning with rank "Photo Junkie"
