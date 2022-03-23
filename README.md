@@ -1,8 +1,7 @@
 
 [![Test Run](https://github.com/ValentinShikovIT/FullFraim/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ValentinShikovIT/FullFraim/actions/workflows/dotnet.yml)
 
-![AppVeyor tests](https://img.shields.io/appveyor/tests/ValentinShikovIT/fullfraim/src?style=for-the-badge)
-[![Build status](https://img.shields.io/appveyor/tests/ValentinShikovIT/fullfraim/src?style=for-the-badge)](https://ci.appveyor.com/project/ValentinShikovIT/FullFraim)
+[![Build status](https://ci.appveyor.com/api/projects/status/hapt0atufncgqgiw?svg=true)](https://ci.appveyor.com/project/ValentinShikovIT/FullFraim)
 ---
 
 #  [**FullFraim**](https://fullfraim.azurewebsites.net/)
