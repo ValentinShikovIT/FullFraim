@@ -1,6 +1,7 @@
 
 [![Test Run](https://github.com/ValentinShikovIT/FullFraim/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ValentinShikovIT/FullFraim/actions/workflows/dotnet.yml)
 
+![AppVeyor tests](https://img.shields.io/appveyor/tests/ValentinShikovIT/FullFraim?style=for-the-badge)
 ---
 
 #  [**FullFraim**](https://fullfraim.azurewebsites.net/)
