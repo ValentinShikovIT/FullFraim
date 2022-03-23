@@ -1,9 +1,12 @@
+
+[![Test Run](https://github.com/ValentinShikovIT/FullFraim/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ValentinShikovIT/FullFraim/actions/workflows/dotnet.yml)
+
+---
+
 #  [**FullFraim**](https://fullfraim.azurewebsites.net/)
 ## _A site full of photo-contests in which you can participate and earn the title of "Photo Dictator"_
 ## _Cool Right!_
 ![N|Solid](https://res.cloudinary.com/fullfraim/image/upload/v1623086529/For%20Documentation/logo_gptfjh.png)
-
-[![Build status](https://dev.azure.com/vshikovit/vshikovit/_apis/build/status/vshikovit-FullFraim%20CI)](https://dev.azure.com/vshikovit/vshikovit/_build/latest?definitionId=-1)
 
 ## Description
 > FullFraim is a project written in ASP.NET. It Includes a public API and a MVC.
